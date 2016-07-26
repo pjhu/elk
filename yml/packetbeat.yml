@@ -1,0 +1,56 @@
+interfaces:
+  device: en0  
+protocols:
+  #dns:
+  #  ports: [53]
+  #  include_authorities: true
+  #  include_additionals: true
+  http:
+    ports: [80, 8080, 8000, 5000, 8002, 5601, 5678]
+  memcache:
+    ports: [11211]
+  mysql:
+    ports: [3306]
+  pgsql:
+    ports: [5432]
+  redis:
+    ports: [6379]
+  thrift:
+    ports: [9090]
+  mongodb:
+    ports: [27017]
+procs:
+  enabled: true 
+  monitored:
+    - process: mysqld
+      cmdline_grep: mysqld
+
+    - process: pgsql
+      cmdline_grep: postgres
+
+    - process: nginx
+      cmdline_grep: nginx
+
+    - process: app
+      cmdline_grep: gunicorn
+output:
+  logstash:
+    hosts: ["192.168.99.100:5678"]
+
+  console:
+    pretty: false
+shipper:
+  name: "packageshipper"
+  tags: ["service-X", "web-tier"]
+  geoip:
+    paths:
+      - "/Users/twer/work/elk/GeoIP/GeoLiteCity.dat"
+logging:
+  to_files: true 
+  files:
+    path: /Users/twer/work/elk/packetbeat-1.1.1-darwin
+    name: mybeat.log
+    rotateeverybytes: 10485760
+    keepfiles: 7 
+  selectors: ["*"]
+  level: error

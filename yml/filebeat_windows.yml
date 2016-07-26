@@ -1,0 +1,34 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - "/Users/twer/work/elk/docker_run/logs/root/test.log"
+      document_type: oms
+      include_lines: ["^Mon","^Tue","^Wed","^Thu","^Fri","^Sat","^Sun"] 
+    -
+      paths:
+        - "/Users/twer/work/elk/docker_run/logs/Journals/test.log"
+      document_type: mule
+      multiline:
+        pattern: "^================================"
+        negate: true
+        match: before 
+    -
+      paths:
+        - "/Users/twer/work/elk/docker_run/logs/KunlunMomSbuxCRM/test.log"
+      document_type: oms
+      include_lines: ["^[[:digit:]][[:digit:]][[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]-[[:digit:]][[:digit:]]"]
+    -
+      paths:
+        - "/Users/twer/work/elk/docker_run/logs/test.log"
+      document_type: oms
+      include_lines: ["^[[:digit:]][[:digit:]]:[[:digit:]][[:digit:]]:[[:digit:]][[:digit:]]"]
+  registry_file: /.filebeat
+output:
+  #logstash:
+  #  hosts: ["10.157.62.149:5043"]
+  #file:
+  #  path: "/var/log/filebeat"
+  #  filename: filebeat
+  console:
+    pretty: true

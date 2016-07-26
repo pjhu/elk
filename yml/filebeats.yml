@@ -1,0 +1,19 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - "/root/elk/logstash_logs/siic_weblogs/test.log"
+      document_type: log
+      multiline:
+        pattern: ^\[
+        negate: true
+        match: after
+#output:
+#  logstash:
+#    hosts: ["192.168.11.135:5678"]
+output:
+  console:
+    pretty: true
+
+shipper:
+  name: defaluthostname

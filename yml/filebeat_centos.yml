@@ -1,0 +1,35 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - "/opt/IBM/httpconf/httplogs/*_access_log"
+      document_type: access
+    -
+      paths:
+        - "/data/nginx_log/access.log"
+      document_type: nginx
+    -
+      paths:
+        - "/data/mule_log/mule.log.10"
+      document_type: mule
+      multiline:
+        pattern: ^([Tt]race|TRACE|[Dd]ebug|DEBUG|[Ii]nfo|INFO|[Ww]arn|WARN|[Ee]rror|ERROR|[Ff]atal|FATAL)
+        negate: true
+        match: after
+    -
+      paths:
+        - "/data/oms_log/catalina.2016-03-15.log"
+      document_type: oms
+      multiline:
+        pattern: ^(Jan[uary|uar]|Feb[ruary|ruar]|M[ar[ch|z]|Apr[il]|Ma[y|i]|Jun[e|i]|Jul[y]|Aug[ust]|Sep[tember]|O[c|k]t[ober]|Nov[ember]|De[c|z][ember] [0-9]{2},)
+        negate: true
+        match: after
+  registry_file: /.filebeat
+output:
+  logstash:
+    hosts: ["10.157.62.149:5043"]
+  #file:
+  #  path: "/var/log/filebeat"
+  #  filename: filebeat
+  #console:
+  #  pretty: true

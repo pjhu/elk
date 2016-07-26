@@ -1,0 +1,36 @@
+{
+    "template" : "apachelog*",
+    "mappings" : {
+      "apachetype" : {
+        "properties" : {
+          "referrerWebSite" : {
+            "index" : "not_analyzed",
+            "type" : "string"
+          },
+          "productId" : {
+            "index" : "not_analyzed",
+            "type" : "string"
+          },
+          "itemId" : {
+            "index" : "not_analyzed",
+            "type" : "string"
+          },
+          "agent" : {
+            "index" : "not_analyzed",
+            "type" : "string"
+          },
+          "clientip" : {
+            "index" : "not_analyzed",
+            "type" : "string"
+          },
+          "geoip" : {
+            "properties" : {
+              "coordinates" : {
+                "type" : "geo_point"
+              }
+            }
+          }
+        }
+      }
+    }
+}
